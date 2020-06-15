@@ -1,0 +1,15 @@
+/coupon-achieve/.classpath
+/coupon-achieve/.project
+/coupon-achieve/.settings
+/coupon-expired/.classpath
+/coupon-expired/.project
+/coupon-expired/.settings
+/coupon-expired/target
+/spring-data-redis-test/.classpath
+/spring-data-redis-test/.project
+/spring-data-redis-test/.settings
+/spring-data-redis-test/target
+/coupon-achieve/target
+/RemoteSystemsTempFiles
+/.metadata
+/*.bak

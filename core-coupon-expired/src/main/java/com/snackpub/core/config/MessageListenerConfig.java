@@ -7,16 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.Topic;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * redis pub/sub 消息监听配置
  *
- * @author api
+ * @author snackpub
  * @date 2020/5/6
  */
 @Configuration
@@ -39,15 +36,15 @@ public class MessageListenerConfig {
         //@param1 消息侦听适配器
         //@param2 消息主题
         // container.addMessageListener(msgAdapter, new PatternTopic("news"));
-        List<Topic> topics = new ArrayList<>(new ArrayList<PatternTopic>() {
+        /*List<Topic> topics = new ArrayList<>(new ArrayList<PatternTopic>() {
             {
                 // 根据正则匹配订阅一个或多个频道
                 add(new PatternTopic("news*"));
             }
-        });
+        });*/
+        //  此处有坑 需要在Redis服务器命令行执行 config set notify-keyspace-events KEA
+        // __keyevent@0__:expired 配置订阅的主题名称此名称时redis提供的名称，标识过期key消息通知 0表示db0 根据自己的dbindex选择合适的数字
         container.addMessageListener(msgAdapter, new PatternTopic("__keyevent@0__:expired"));
-        log.info("RedisMessageListenerContainer init...");
-
         return container;
     }
 

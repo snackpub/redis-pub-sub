@@ -1,9 +1,13 @@
 package com.snackpub.core.config;
 
+import com.snackpub.core.api.entity.Coupon;
+import com.snackpub.core.api.mapper.CouponMapper;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 
+import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -13,6 +17,9 @@ import java.nio.charset.StandardCharsets;
  * @author api
  */
 public class MyRedisChannelListener implements MessageListener {
+
+    @Resource
+    private CouponMapper couponMapper;
 
     /**
      * 通过Redis处理接收对象的回调
@@ -29,9 +36,18 @@ public class MyRedisChannelListener implements MessageListener {
         byte[] body = message.getBody();
         String content = new String(body, StandardCharsets.UTF_8);
         String address = new String(channel, StandardCharsets.UTF_8);
-
         System.out.println("从channel为：" + address + "获取了一条新的消息，消息内容为：" +
                 content);
+
+        String key = new String(message.getBody());
+        if (key.startsWith("coupon")) {
+            String id = key.split(":")[1];
+            Coupon coupon = couponMapper.selectCouponById(Long.parseLong(id));
+            coupon.setState(1);
+            couponMapper.updateCoupon(coupon);
+            System.out.println("数据库已经更新券失效");
+        }
+
     }
 
 }

@@ -2,7 +2,6 @@ package com.snackpub.core.config;
 
 import com.snackpub.core.api.entity.Coupon;
 import com.snackpub.core.api.mapper.CouponMapper;
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -14,12 +13,16 @@ import java.nio.charset.StandardCharsets;
  * 配置redis消息的监听器：
  * 获取redis中的消息并进行处理
  *
- * @author api
+ * @author snackpub
  */
 public class MyRedisChannelListener implements MessageListener {
 
-    @Resource
     private CouponMapper couponMapper;
+
+    public MyRedisChannelListener(CouponMapper couponMapper) {
+        this.couponMapper = couponMapper;
+    }
+
 
     /**
      * 通过Redis处理接收对象的回调

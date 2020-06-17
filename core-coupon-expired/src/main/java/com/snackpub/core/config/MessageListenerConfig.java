@@ -1,5 +1,6 @@
 package com.snackpub.core.config;
 
+import com.snackpub.core.api.mapper.CouponMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -20,11 +23,14 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 @Slf4j
 public class MessageListenerConfig {
 
+    @Resource
+    private CouponMapper couponMapper;
+
     @Bean
     @ConditionalOnMissingBean(name = "messageListenerAdapter")
     public MessageListenerAdapter messageListenerAdapter() {
         log.info("MessageListenerAdapter init...");
-        return new MessageListenerAdapter(new MyRedisChannelListener());
+        return new MessageListenerAdapter(new MyRedisChannelListener(couponMapper));
     }
 
     @Bean

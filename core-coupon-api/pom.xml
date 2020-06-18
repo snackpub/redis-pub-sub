@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>snackpub-coupon-api</artifactId>
+    <artifactId>core-coupon-api</artifactId>
     <version>${snackpub.project.version}</version>
     <name>${project.artifactId}</name>
     <description>优惠券API</description>
@@ -24,6 +24,6 @@
             <artifactId>core-boot</artifactId>
             <version>${snackpub.project.version}</version>
         </dependency>
-
     </dependencies>
+
 </project>

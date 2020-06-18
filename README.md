@@ -11,10 +11,9 @@ publish 命令向 redis server 发送特定类型的消息时。订阅该消息�
 
 ###### 环境依赖
 JDK1.8   
-Redis version 3.0.503
-
-
-安装 Lombok 插件 
+Redis version 3.0.503  
+安装 Lombok 插件   
+修改redis、mysql连接账户密码
 
 ## 工程结构
 
@@ -49,4 +48,9 @@ Redis-Pub-Sub
 ##### 使用redis-cli开启事件监听
 ```config set notify-keyspace-events KEA```
 
-注意：如何不设置的话就算开启了程序中开启了监听也不会进行调用！！
+注意：如何不设置的话就算程序中开启了监听也不会进行调用！！
+
+## 测试
+0. 测试redis是否正常连接 core-coupon-expired 模型 redis 测试类
+1. 启动 core-coupon-expired 模型 CouponExpiredApplication.java
+2. 运行 core-coupon-achieve 测试类
